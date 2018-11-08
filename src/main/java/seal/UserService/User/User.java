@@ -42,7 +42,7 @@ public class User {
     private String faculty;
 
     @NotNull
-    private String year;
+    private int year;
     
     @NotNull
     private String image;
@@ -106,11 +106,11 @@ public class User {
         this.faculty = faculty;
     }
 
-    public String getYear() {
+    public int getYear() {
         return year;
     }
 
-    public void setYear(String year) {
+    public void setYear(int year) {
         this.year = year;
     }
     
