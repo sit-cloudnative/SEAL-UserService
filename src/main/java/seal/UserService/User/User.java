@@ -34,6 +34,15 @@ public class User {
 
     @NotNull
     private String lastname;
+
+    @NotNull
+    private String department;
+
+    @NotNull
+    private String faculty;
+
+    @NotNull
+    private String year;
     
     @NotNull
     private String image;
@@ -81,6 +90,30 @@ public class User {
         this.lastname = lastname;
     }
 
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    public String getFaculty() {
+        return faculty;
+    }
+
+    public void setFaculty(String faculty) {
+        this.faculty = faculty;
+    }
+
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
+    
     public String getImage() {
         return image;
     }
@@ -107,7 +140,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" + "id=" + id + ", password=" + password + ", firstname=" + firstname + ", lastname=" + lastname + ", image=" + image + ", created_at=" + created_at + ", updated_at=" + updated_at + '}';
+        return "User{" + "id=" + id + ", password=" + password + ", firstname=" + firstname + ", lastname=" + lastname + ", department=" + department + ", faculty=" + faculty + ", year=" + year + ", image=" + image + ", created_at=" + created_at + ", updated_at=" + updated_at + '}';
     }
     
 }
