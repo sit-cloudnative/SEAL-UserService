@@ -1,5 +1,6 @@
 package seal.UserService.User;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -11,17 +12,18 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.io.Serializable;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @EntityListeners(AuditingEntityListener.class)
-@JsonIgnoreProperties(value = { "created_at", "updated_at" }, allowGetters = true)
+@JsonIgnoreProperties(value = { "created_at", "updated_at", "hibernateLazyInitializer", "password", "handler" }, allowGetters = true)
 
 @Table(name = "user")
 @Entity
-public class User {
+public class User implements Serializable{
 
     @Id
     private long id;

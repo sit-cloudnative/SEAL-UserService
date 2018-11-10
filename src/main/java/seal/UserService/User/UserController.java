@@ -38,7 +38,7 @@ public class UserController {
     }
 
     @PostMapping(path = "/user/login")
-    public ResponseEntity<String> signInByStudentId(@RequestBody Map<String, String> user_input, HttpServletResponse response) {
+    public ResponseEntity<HashMap> signInByStudentId(@RequestBody Map<String, String> user_input, HttpServletResponse response) {
         Long userId = Long.parseLong(user_input.get("id").toString());
         String password = user_input.get("password").toString();
 //        User son = new User();
@@ -50,6 +50,7 @@ public class UserController {
 //        son.setId(59130500097l);
 //        userRepository.save(son);
         User user = userService.getUserById(userId);
+        System.out.println(user);
         HashMap<String, Object> responseData = new HashMap();
 
         if (user != null) {
@@ -60,10 +61,12 @@ public class UserController {
                 response.addHeader("token", token);
                 System.out.println(response.getHeaderNames());
                 responseData.put("status", true);
-                responseData.put("jwt", token);
-                return new ResponseEntity<String>("wtf", HttpStatus.OK);
+                responseData.put("jwtToken", token);
+                responseData.put("user", user);
+                return new ResponseEntity<HashMap>(responseData, HttpStatus.OK);
             }
         }
-        return new ResponseEntity<String>("fail to login", HttpStatus.OK);
+        responseData.put("status", false);
+        return new ResponseEntity<HashMap>(responseData, HttpStatus.UNAUTHORIZED);
     }
 }
