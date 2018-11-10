@@ -16,6 +16,7 @@ public class TokenAuthenticationService {
     static Key SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
     public String createTokenUser(User user) {
+        System.out.println(SECRET_KEY);
         String token = Jwts.builder()
         .setSubject("UserService")
         .claim("id", user.getId())

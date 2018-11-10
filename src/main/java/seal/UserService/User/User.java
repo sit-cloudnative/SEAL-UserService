@@ -35,16 +35,16 @@ public class User {
     @NotNull
     private String lastname;
 
-    @NotNull
+    //@NotNull
     private String department;
 
-    @NotNull
+    //@NotNull
     private String faculty;
 
-    @NotNull
+    //@NotNull
     private int year;
     
-    @NotNull
+    //@NotNull
     private String image;
 
     @Temporal(TemporalType.TIMESTAMP)
