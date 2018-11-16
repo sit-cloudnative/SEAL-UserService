@@ -3,8 +3,11 @@ package seal.UserService.User;
 import java.security.Key;
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Service;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -16,15 +19,32 @@ public class TokenAuthenticationService {
     static Key SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
     public String createTokenUser(User user) {
-        System.out.println(SECRET_KEY);
+        Date now = new Date();
+        Claims claims = Jwts.claims().setSubject(""+user.getId());
+
         String token = Jwts.builder()
-        .setSubject("UserService")
-        .claim("id", user.getId())
-        .claim("firstname", user.getFirstname())
-        .claim("image", user.getImage())
+        .setClaims(claims)
+        .setIssuedAt(now)
         .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-        .signWith(SECRET_KEY).compact();
+        .signWith(SECRET_KEY)
+        .compact();
         return token;
+    }
+
+    public String getAuthenticationToken(HttpServletRequest request){
+        String token = request.getHeader("token");
+
+        if(token == null) {
+            return null;
+        }
+
+        String studentId = Jwts.parser()
+                .setSigningKey(SECRET_KEY)
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject();
+        
+        return studentId;
     }
 
 }
