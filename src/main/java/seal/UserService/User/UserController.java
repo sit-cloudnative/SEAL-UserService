@@ -1,14 +1,11 @@
 package seal.UserService.User;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,14 +38,6 @@ public class UserController {
     public ResponseEntity<HashMap> signInByStudentId(@RequestBody Map<String, String> user_input, HttpServletResponse response) {
         Long userId = Long.parseLong(user_input.get("id").toString());
         String password = user_input.get("password").toString();
-//        User son = new User();
-//        son.setCreated_at(new Date());
-//        son.setDepartment("Information Technology");
-//        son.setFirstname("Supakorn");
-//        son.setLastname("Trakumaiphol");
-//        son.setPassword("wdrdres3qew5ts21");
-//        son.setId(59130500097l);
-//        userRepository.save(son);
         User user = userService.getUserById(userId);
         System.out.println(user);
         HashMap<String, Object> responseData = new HashMap();
@@ -57,11 +46,11 @@ public class UserController {
             String userPassword = user.getPassword();
             if (userPassword.equals(password)) {
                 String token = tokenAuthenticationService.createTokenUser(user);
-                response.addCookie(new Cookie("cookie_token", token));
-                response.addHeader("token", token);
+                //response.addCookie(new Cookie("cookie_token", token));
+                response.addHeader("Authorization", "Bearer " + token);
                 System.out.println(response.getHeaderNames());
                 responseData.put("status", true);
-                responseData.put("jwtToken", token);
+                responseData.put("jwtToken", "Bearer " + token);
                 responseData.put("user", user);
                 return new ResponseEntity<HashMap>(responseData, HttpStatus.OK);
             }
