@@ -9,15 +9,15 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 public class FilterConfig extends WebSecurityConfigurerAdapter {
 
-    @Override
+    @Override // ส่วนของ กำหนด filter 
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests()
-            .antMatchers("/").permitAll()
-            .antMatchers(HttpMethod.POST, "/user/login").permitAll()
+            .antMatchers("/").permitAll() // ให้ ทุกหน้าที่ '/' ผ่านได้เลย โดยไม่ต้อง login 
+            .antMatchers(HttpMethod.POST, "/user/login").permitAll() // ให้ '/user/login' ที่เป็น post ผ่านได้
             .anyRequest().authenticated()
             .and()
             .addFilterBefore(
-                    new JWTGenericFilterBean(),
+                    new JWTGenericFilterBean(), // เรียกใช้ JWTGenericFilterBean 
                     UsernamePasswordAuthenticationFilter.class
             );
     }

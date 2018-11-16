@@ -39,14 +39,14 @@ public class TokenAuthenticationService {
         String token = request.getHeader("Authorization");
         if (token != null) {
             // parse the token.
-            String user = Jwts.parser()
+            String user = Jwts.parser() // แปลง token ที่รับมาจาก request ได้ค่า user.getId() ที่เราเก็บไว้
                     .setSigningKey(SECRET_KEY)
                     .parseClaimsJws(token.replace("Bearer", ""))
                     .getBody()
                     .getSubject();
 
             return user != null ?
-                    new UsernamePasswordAuthenticationToken(user, null, emptyList()) :
+                    new UsernamePasswordAuthenticationToken(user, null, emptyList()) : // ถ้า user ไม่ใช่ null ให้ส่งค่า user ว่าผ่านได้
                     null;
         }
         return null;
