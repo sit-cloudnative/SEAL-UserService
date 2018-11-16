@@ -29,6 +29,7 @@ public class User implements Serializable{
     private long id;
 
     @NotNull
+    @JsonIgnore
     private String password;
 
     @NotNull
